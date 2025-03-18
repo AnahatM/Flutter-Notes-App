@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:minimalist_notes_app/components/my_drawer.dart';
+import 'package:minimalist_notes_app/components/note_tile.dart';
 import 'package:minimalist_notes_app/models/note.dart';
 import 'package:minimalist_notes_app/models/note_database.dart';
 import 'package:provider/provider.dart';
@@ -119,36 +122,57 @@ class _NotesPageState extends State<NotesPage> {
     List<Note> currentNotes = noteDatabase.currentNotes;
 
     return Scaffold(
-      appBar: AppBar(title: Text("Notes")),
+      // Page Setup
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
+      drawer: const MyDrawer(),
+      // Create Note Button
       floatingActionButton: FloatingActionButton(
         onPressed: createNote,
-        child: Icon(Icons.add),
+        shape: CircleBorder(),
+        elevation: 1,
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).colorScheme.inversePrimary,
+        ),
       ),
-      body: ListView.builder(
-        itemCount: currentNotes.length,
-        itemBuilder: (context, index) {
-          // Get individual note
-          final note = currentNotes[index];
-          // Return ListTile UI
-          return ListTile(
-            title: Text(note.text),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Edit Button
-                IconButton(
-                  onPressed: () => updateNote(note),
-                  icon: Icon(Icons.edit),
-                ),
-                // Delete Button
-                IconButton(
-                  onPressed: () => deleteNote(note.id),
-                  icon: Icon(Icons.delete),
-                ),
-              ],
+      // Page Content
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Custom Title Heading
+          Padding(
+            padding: const EdgeInsets.only(left: 25.0),
+            child: Text(
+              "Notes",
+              style: GoogleFonts.dmSerifText(
+                fontSize: 48,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
             ),
-          );
-        },
+          ),
+
+          // Build List of Notes
+          Expanded(
+            child: ListView.builder(
+              itemCount: currentNotes.length,
+              itemBuilder: (context, index) {
+                // Get individual note
+                final note = currentNotes[index];
+                // Return ListTile UI
+                return NoteTile(
+                  note: note,
+                  updateNote: updateNote,
+                  deleteNote: deleteNote,
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
