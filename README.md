@@ -2,6 +2,9 @@
 
 A simple, minimalist mobile notes app made using Flutter with full CRUD functionality.
 
+![Flutter](https://img.shields.io/badge/-Flutter-05122A?style=flat-square&logo=Flutter&color=2a2e34)
+![Dart](https://img.shields.io/badge/-Dart-05122A?style=flat-square&logo=Dart&color=2a2e34)
+
 <img src="images/CoverImage.png" alt="App Cover" width=650px />
 
 ## Flutter Guide
